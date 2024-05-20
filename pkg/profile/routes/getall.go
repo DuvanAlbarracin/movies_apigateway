@@ -4,8 +4,8 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/DuvanAlbarracin/movies_api_gateway/pkg/profile/proto"
-	"github.com/DuvanAlbarracin/movies_api_gateway/pkg/utils"
+	"github.com/DuvanAlbarracin/movies_apigateway/pkg/profile/proto"
+	"github.com/DuvanAlbarracin/movies_apigateway/pkg/utils"
 	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc/status"
 )

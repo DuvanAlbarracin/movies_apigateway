@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/DuvanAlbarracin/movies_api_gateway/pkg/auth/proto"
+	"github.com/DuvanAlbarracin/movies_apigateway/pkg/auth/proto"
 	"github.com/gin-gonic/gin"
 )
 

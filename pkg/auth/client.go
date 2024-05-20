@@ -3,8 +3,8 @@ package auth
 import (
 	"fmt"
 
-	"github.com/DuvanAlbarracin/movies_api_gateway/pkg/auth/proto"
-	"github.com/DuvanAlbarracin/movies_api_gateway/pkg/config"
+	"github.com/DuvanAlbarracin/movies_apigateway/pkg/auth/proto"
+	"github.com/DuvanAlbarracin/movies_apigateway/pkg/config"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )

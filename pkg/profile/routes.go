@@ -1,8 +1,8 @@
 package profile
 
 import (
-	"github.com/DuvanAlbarracin/movies_api_gateway/pkg/config"
-	"github.com/DuvanAlbarracin/movies_api_gateway/pkg/profile/routes"
+	"github.com/DuvanAlbarracin/movies_apigateway/pkg/config"
+	"github.com/DuvanAlbarracin/movies_apigateway/pkg/profile/routes"
 	"github.com/gin-gonic/gin"
 )
 

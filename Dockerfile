@@ -1,6 +1,6 @@
 FROM golang:1.22-bullseye AS build
 
-WORKDIR /movies_api_gateway
+WORKDIR /movies_apigateway
 
 COPY go.mod go.sum ./
 
@@ -19,7 +19,7 @@ FROM scratch
 
 WORKDIR /
 
-COPY --from=build /movies_api_gateway/app /bin/app
+COPY --from=build /movies_apigateway/app /bin/app
 
 EXPOSE 3000
 

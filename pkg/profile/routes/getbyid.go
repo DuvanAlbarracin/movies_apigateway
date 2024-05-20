@@ -2,11 +2,12 @@ package routes
 
 import (
 	"context"
+	"log"
 	"net/http"
 	"strconv"
 
-	"github.com/DuvanAlbarracin/movies_api_gateway/pkg/profile/proto"
-	"github.com/DuvanAlbarracin/movies_api_gateway/pkg/utils"
+	"github.com/DuvanAlbarracin/movies_apigateway/pkg/profile/proto"
+	"github.com/DuvanAlbarracin/movies_apigateway/pkg/utils"
 	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc/status"
 )
@@ -28,6 +29,8 @@ func GetById(ctx *gin.Context, c proto.ProfilesServiceClient) {
 	res, err := c.GetById(context.Background(), &proto.GetByIdRequest{
 		Id: int64(id),
 	})
+
+	log.Println("Response from GetById API:", res)
 
 	if err != nil {
 		rpcCode := utils.RpcCode{Code: status.Convert(err).Code()}

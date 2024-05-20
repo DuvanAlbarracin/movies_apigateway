@@ -3,8 +3,8 @@ package profile
 import (
 	"log"
 
-	"github.com/DuvanAlbarracin/movies_api_gateway/pkg/config"
-	"github.com/DuvanAlbarracin/movies_api_gateway/pkg/profile/proto"
+	"github.com/DuvanAlbarracin/movies_apigateway/pkg/config"
+	"github.com/DuvanAlbarracin/movies_apigateway/pkg/profile/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )

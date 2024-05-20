@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
-	"github.com/DuvanAlbarracin/movies_api_gateway/pkg/config"
-	"github.com/DuvanAlbarracin/movies_api_gateway/pkg/profile"
+	"github.com/DuvanAlbarracin/movies_apigateway/pkg/config"
+	"github.com/DuvanAlbarracin/movies_apigateway/pkg/profile"
 	"github.com/gin-gonic/gin"
 )
 

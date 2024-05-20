@@ -1,8 +1,8 @@
 package auth
 
 import (
-	"github.com/DuvanAlbarracin/movies_api_gateway/pkg/auth/routes"
-	"github.com/DuvanAlbarracin/movies_api_gateway/pkg/config"
+	"github.com/DuvanAlbarracin/movies_apigateway/pkg/auth/routes"
+	"github.com/DuvanAlbarracin/movies_apigateway/pkg/config"
 	"github.com/gin-gonic/gin"
 )
 
