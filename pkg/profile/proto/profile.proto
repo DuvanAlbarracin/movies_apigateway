@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package profile;
+
+option go_package = "./pkg/profile/proto";
+
+service ProfilesService {
+    rpc Create(CreateRequest) returns (CreateResponse){}
+    rpc Delete(DeleteRequest) returns (DeleteResponse){}
+    rpc Modify(ModifyRequest) returns (ModifyResponse){}
+    rpc GetById(GetByIdRequest) returns (GetByIdResponse){}
+    rpc GetAll(GetAllRequest) returns (GetAllResponse){}
+}
+
+enum Gender {
+    GENDER_UNSPECIFIED = 0;
+    GENDER_MALE = 1;
+    GENDER_FEMALE = 2;
+}
+
+enum Role {
+    ROLE_ACTOR = 0;
+    ROLE_DIRECTOR = 1;
+    ROLE_WRITTER = 2;
+    ROLE_MUSICAL = 3;
+}
+
+message Profile {
+    int64 id = 1;
+    string firstName = 2;
+    string lastName = 3;
+    int32 age = 4;
+    Gender gender = 5;
+    string city = 6;
+    Role role = 7;
+}
+
+message CreateRequest{
+    string firstName = 1;
+    string lastName = 2;
+    int32 age = 3;
+    Gender gender = 4;
+    string city = 5;
+    Role role = 6;
+}
+
+message CreateResponse{
+    int32 status = 1;
+    string error = 2;
+}
+
+message DeleteRequest{
+    int64 id = 1;
+}
+
+message DeleteResponse{
+    int32 status = 1;
+    string error = 2;
+}
+
+message ModifyRequest {
+    optional string firstName = 1;
+    optional string lastName = 2;
+    optional int32 age = 3;
+    optional Gender gender = 4;
+    optional string city = 5;
+    optional Role role = 6;
+}
+
+message ModifyResponse {
+    int32 status = 1;
+    string error = 2;
+}
+
+message GetByIdRequest {
+    int64 id = 1;
+}
+
+message GetByIdResponse {
+    Profile profile = 1;
+    string error = 2;
+}
+
+message GetAllRequest{}
+
+message GetAllResponse{
+    string error = 1;
+    repeated Profile profiles = 2;
+}
