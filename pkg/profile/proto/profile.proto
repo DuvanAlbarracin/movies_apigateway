@@ -26,13 +26,13 @@ enum Role {
 }
 
 message Profile {
-    int64 id = 1;
-    string firstName = 2;
-    string lastName = 3;
-    int32 age = 4;
-    Gender gender = 5;
-    string city = 6;
-    Role role = 7;
+    optional int64 id = 1;
+    optional string firstName = 2;
+    optional string lastName = 3;
+    optional int32 age = 4;
+    optional Gender gender = 5;
+    optional string city = 6;
+    optional Role role = 7;
 }
 
 message CreateRequest{

@@ -2,7 +2,6 @@ package routes
 
 import (
 	"context"
-	"log"
 	"net/http"
 	"strconv"
 
@@ -29,9 +28,6 @@ func GetById(ctx *gin.Context, c proto.ProfilesServiceClient) {
 	res, err := c.GetById(context.Background(), &proto.GetByIdRequest{
 		Id: int64(id),
 	})
-
-	log.Println("Response from GetById API:", res)
-
 	if err != nil {
 		rpcCode := utils.RpcCode{Code: status.Convert(err).Code()}
 		ctx.JSON(int(rpcCode.ToHttpCode()), gin.H{
