@@ -2,6 +2,7 @@ package routes
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/DuvanAlbarracin/movies_apigateway/pkg/profile/proto"
 	"github.com/DuvanAlbarracin/movies_apigateway/pkg/utils"
@@ -14,17 +15,16 @@ type DeleteRequestBody struct {
 }
 
 func Delete(ctx *gin.Context, c proto.ProfilesServiceClient) {
-	body := DeleteRequestBody{}
-
-	if err := ctx.BindJSON(&body); err != nil {
+	id, err := strconv.Atoi(ctx.Param("id"))
+	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
+			"error": "Cannot parse Id param",
 		})
 		return
 	}
 
 	res, err := c.Delete(ctx, &proto.DeleteRequest{
-		Id: body.Id,
+		Id: int64(id),
 	})
 
 	if err != nil {

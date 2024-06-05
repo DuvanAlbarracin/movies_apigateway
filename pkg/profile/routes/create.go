@@ -10,17 +10,17 @@ import (
 )
 
 type CreateRequestBody struct {
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
-	Age       int16  `json:"age"`
-	Gender    int8   `json:"gender"`
-	City      string `json:"city"`
-	Role      int8   `json:"role"`
+	FirstName *string `json:"first_name"`
+	LastName  *string `json:"last_name"`
+	Age       *int32  `json:"age"`
+	Gender    *int32  `json:"gender"`
+	City      *string `json:"city"`
+	Role      *int32  `json:"role"`
 }
 
 func Create(ctx *gin.Context, c proto.ProfilesServiceClient) {
-	body := CreateRequestBody{}
 
+	body := CreateRequestBody{}
 	if err := ctx.BindJSON(&body); err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
@@ -28,13 +28,26 @@ func Create(ctx *gin.Context, c proto.ProfilesServiceClient) {
 		return
 	}
 
+	if body.FirstName == nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": "Cannot create a profile without First Name",
+		})
+		return
+	}
+	if body.Role == nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": "Cannot create a profile without Role",
+		})
+		return
+	}
+
 	res, err := c.Create(ctx, &proto.CreateRequest{
-		FirstName: utils.SanitizeString(body.FirstName),
-		LastName:  utils.SanitizeString(body.LastName),
-		Age:       int32(body.Age),
-		Gender:    proto.Gender(body.Gender),
-		City:      utils.SanitizeString(body.City),
-		Role:      proto.Role(body.Role),
+		FirstName: *body.FirstName,
+		LastName:  body.LastName,
+		Age:       body.Age,
+		Gender:    (*proto.Gender)(body.Gender),
+		City:      body.City,
+		Role:      proto.Role(*body.Role),
 	})
 
 	if err != nil {

@@ -18,8 +18,8 @@ func RegisterRoutes(r *gin.Engine, c *config.Config) *ServiceClient {
 	// routes.Use(aut.AuthRequired)
 
 	routes.POST("/create", svc.Create)
-	routes.DELETE("/delete", svc.Delete)
-	routes.PATCH("/modify", svc.Modify)
+	routes.DELETE("/delete/:id", svc.Delete)
+	routes.PATCH("/modify/:id", svc.Modify)
 	routes.GET("/:id", svc.GetById)
 	routes.GET("", svc.GetAll)
 

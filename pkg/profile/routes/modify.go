@@ -2,6 +2,7 @@ package routes
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/DuvanAlbarracin/movies_apigateway/pkg/profile/proto"
 	"github.com/DuvanAlbarracin/movies_apigateway/pkg/utils"
@@ -10,17 +11,28 @@ import (
 )
 
 type ModifyRequestBody struct {
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
-	Age       int32  `json:"age"`
-	Gender    int32  `json:"gender"`
-	City      string `json:"city"`
-	Role      int32  `json:"role"`
+	FirstName *string `json:"first_name"`
+	LastName  *string `json:"last_name"`
+	Age       *int32  `json:"age"`
+	Gender    *int32  `json:"gender"`
+	City      *string `json:"city"`
+	Role      *int32  `json:"role"`
 }
 
 func Modify(ctx *gin.Context, c proto.ProfilesServiceClient) {
-	body := ModifyRequestBody{}
+	var firstName string
+	var lastName string
+	var city string
 
+	id, err := strconv.Atoi(ctx.Param("id"))
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Cannot parse Id param",
+		})
+		return
+	}
+
+	body := ModifyRequestBody{}
 	if err := ctx.BindJSON(&body); err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
@@ -28,17 +40,29 @@ func Modify(ctx *gin.Context, c proto.ProfilesServiceClient) {
 		return
 	}
 
-	body.FirstName = utils.SanitizeString(body.FirstName)
-	body.LastName = utils.SanitizeString(body.LastName)
-	body.City = utils.SanitizeString(body.City)
+	if body.FirstName != nil {
+		firstName = utils.SanitizeString(*body.FirstName)
+		body.FirstName = &firstName
+	}
+
+	if body.LastName != nil {
+		lastName = utils.SanitizeString(*body.LastName)
+		body.LastName = &lastName
+	}
+
+	if body.City != nil {
+		city = utils.SanitizeString(*body.City)
+		body.City = &city
+	}
 
 	res, err := c.Modify(ctx, &proto.ModifyRequest{
-		FirstName: &body.FirstName,
-		LastName:  &body.LastName,
-		Age:       &body.Age,
-		Gender:    (*proto.Gender)(&body.Gender),
-		City:      &body.City,
-		Role:      (*proto.Role)(&body.Role),
+		Id:        int64(id),
+		FirstName: body.FirstName,
+		LastName:  body.LastName,
+		Age:       body.Age,
+		Gender:    (*proto.Gender)(body.Gender),
+		City:      body.City,
+		Role:      (*proto.Role)(body.Role),
 	})
 
 	if err != nil {
