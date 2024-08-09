@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package genre;
+
+option go_package = "./pkg/genre/proto";
+
+service GenreService {
+    rpc GetById(GetByIdRequest) returns (GetByIdResponse) {}
+    rpc GetAll(GetAllRequest) returns (GetAllResponse) {}
+    rpc AddToMovie(AddToMovieRequest) returns (AddToMovieResponse) {}
+    rpc RemoveFromMovie(RemoveFromMovieRequest) returns (RemoveFromMovieResponse) {}
+}
+
+message Genre {
+    optional int64 id = 1;
+    optional string name = 2;
+}
+
+message GetByIdRequest { int64 id = 1; }
+
+message GetByIdResponse {
+    string error = 1;
+    Genre genre = 2;
+}
+
+message GetAllRequest {}
+
+message GetAllResponse {
+    string error = 1;
+    repeated Genre genres = 2;
+}
+
+message AddToMovieRequest {
+    int64 movie_id = 1;
+    int64 genre_id = 2;
+}
+
+message AddToMovieResponse {
+    int32 status = 1;
+    string error = 2;
+}
+
+message RemoveFromMovieRequest{
+    int64 movie_id = 1;
+    int64 genre_id = 2;
+}
+
+message RemoveFromMovieResponse{
+    int32 status = 1;
+    string error = 2;
+}

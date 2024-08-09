@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/DuvanAlbarracin/movies_apigateway/pkg/profile/proto"
+	"github.com/DuvanAlbarracin/movies_apigateway/pkg/movie/proto"
 	"github.com/DuvanAlbarracin/movies_apigateway/pkg/utils"
 	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc/status"
@@ -14,7 +14,7 @@ type DeleteRequestBody struct {
 	Id int64 `json:"id"`
 }
 
-func Delete(ctx *gin.Context, c proto.ProfilesServiceClient) {
+func Delete(ctx *gin.Context, c proto.MoviesServiceClient) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{

@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package movie;
+
+option go_package = "./pkg/movie/proto";
+
+service MoviesService {
+  rpc Create(CreateRequest) returns (CreateResponse) {}
+  rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+  rpc Modify(ModifyRequest) returns (ModifyResponse) {}
+  rpc GetById(GetByIdRequest) returns (GetByIdResponse) {}
+  rpc GetAll(GetAllRequest) returns (GetAllResponse) {}
+}
+
+message Movie {
+  optional int64 id = 1;
+  optional string title = 2;
+  optional int64 directorID = 3;
+  optional int32 releaseYear = 4;
+  optional int64 musicBy = 5;
+  optional int64 writtenBy = 6;
+}
+
+message CreateRequest {
+  string title = 1;
+  int32 releaseYear = 2;
+  optional int64 directorID = 3;
+  optional int64 musicBy = 4;
+  optional int64 writtenBy = 5;
+}
+
+message CreateResponse {
+  int32 status = 1;
+  int64 id = 2;
+  string error = 3;
+}
+
+message DeleteRequest { int64 id = 1; }
+
+message DeleteResponse {
+  int32 status = 1;
+  string error = 2;
+}
+
+message ModifyRequest {
+  int64 id = 1;
+  optional string title = 2;
+  optional int32 releaseYear = 3;
+  optional int64 directorID = 4;
+  optional int64 musicBy = 5;
+  optional int64 writtenBy = 6;
+}
+
+message ModifyResponse {
+  int32 status = 1;
+  int64 id = 2;
+  string error = 3;
+}
+
+message GetByIdRequest { int64 id = 1; }
+
+message GetByIdResponse {
+  Movie movie = 1;
+  string error = 2;
+}
+
+message GetAllRequest {}
+
+message GetAllResponse { repeated Movie movies = 1; }

@@ -1,27 +1,23 @@
-package profile
+package movie
 
 import (
 	"github.com/DuvanAlbarracin/movies_apigateway/pkg/config"
-	"github.com/DuvanAlbarracin/movies_apigateway/pkg/profile/routes"
+	"github.com/DuvanAlbarracin/movies_apigateway/pkg/movie/routes"
 	"github.com/gin-gonic/gin"
 )
 
-// func RegisterRoutes(r *gin.Engine, c *config.Config, authSvc *auth.ServiceClient) *ServiceClient {
 func RegisterRoutes(r *gin.Engine, c *config.Config) *ServiceClient {
-	// aut := auth.InitAuthMiddleware(authSvc)
-
 	svc := &ServiceClient{
 		Client: InitServiceClient(c),
 	}
 
-	routeGroup := r.Group("/profiles")
-	// routes.Use(aut.AuthRequired)
+	routes := r.Group("/movies")
 
-	routeGroup.POST("/create", svc.Create)
-	routeGroup.DELETE("/delete/:id", svc.Delete)
-	routeGroup.PATCH("/modify/:id", svc.Modify)
-	routeGroup.GET("/:id", svc.GetById)
-	routeGroup.GET("", svc.GetAll)
+	routes.POST("/create", svc.Create)
+	routes.DELETE("/delete/:id", svc.Delete)
+	routes.PATCH("/modify/:id", svc.Modify)
+	routes.GET("/:id", svc.GetById)
+	routes.GET("", svc.GetAll)
 
 	return svc
 }

@@ -25,14 +25,20 @@ func LoadConfig() (c Config, err error) {
 	// 	return
 	// }
 
-	profileUrlData, err := os.ReadFile("/run/secrets/profiles_url")
+	// profileUrlData, err := os.ReadFile("/run/secrets/profiles_url")
+	// if err != nil {
+	// 	return
+	// }
+
+	movieUrlData, err := os.ReadFile("/run/secrets/movies_url")
 	if err != nil {
 		return
 	}
 
 	c.Port = utils.TrimString(string(apiPortData))
 	// c.AuthUrl = utils.TrimString(string(authUrlData))
-	c.ProfileUrl = utils.TrimString(string(profileUrlData))
+	// c.ProfileUrl = utils.TrimString(string(profileUrlData))
+	c.MovieUrl = utils.TrimString(string(movieUrlData))
 
 	return
 }

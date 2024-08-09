@@ -3,33 +3,31 @@ package routes
 import (
 	"context"
 	"net/http"
+	"strconv"
 
-	"github.com/DuvanAlbarracin/movies_apigateway/pkg/auth/proto"
+	"github.com/DuvanAlbarracin/movies_apigateway/pkg/genre/proto"
 	"github.com/DuvanAlbarracin/movies_apigateway/pkg/utils"
 	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc/status"
 )
 
-type LoginRequestBody struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
+type GetByIdRequestBody struct {
+	Id int64 `json:"id"`
 }
 
-func Login(ctx *gin.Context, c proto.AuthServiceClient) {
-	body := LoginRequestBody{}
+func GetById(ctx *gin.Context, c proto.GenreServiceClient) {
+	id, err := strconv.Atoi(ctx.Param("id"))
 
-	if err := ctx.BindJSON(&body); err != nil {
+	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
+			"error": "Cannot parse Id param",
 		})
 		return
 	}
 
-	res, err := c.Login(context.Background(), &proto.LoginRequest{
-		Email:    body.Email,
-		Password: body.Password,
+	res, err := c.GetById(context.Background(), &proto.GetByIdRequest{
+		Id: int64(id),
 	})
-
 	if err != nil {
 		rpcCode := utils.RpcCode{Code: status.Convert(err).Code()}
 		ctx.JSON(int(rpcCode.ToHttpCode()), gin.H{

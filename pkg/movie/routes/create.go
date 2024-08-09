@@ -3,22 +3,21 @@ package routes
 import (
 	"net/http"
 
-	"github.com/DuvanAlbarracin/movies_apigateway/pkg/profile/proto"
+	"github.com/DuvanAlbarracin/movies_apigateway/pkg/movie/proto"
 	"github.com/DuvanAlbarracin/movies_apigateway/pkg/utils"
 	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc/status"
 )
 
 type CreateRequestBody struct {
-	FirstName *string `json:"first_name"`
-	LastName  *string `json:"last_name"`
-	Age       *int32  `json:"age"`
-	Gender    *int32  `json:"gender"`
-	City      *string `json:"city"`
-	Role      *int32  `json:"role"`
+	Title       *string `json:"title"`
+	DirectorId  *int64  `json:"director_id"`
+	ReleaseYear *int32  `json:"release_year"`
+	MusicBy     *int64  `json:"music_by"`
+	WrittenBy   *int64  `json:"written_by"`
 }
 
-func Create(ctx *gin.Context, c proto.ProfilesServiceClient) {
+func Create(ctx *gin.Context, c proto.MoviesServiceClient) {
 	body := CreateRequestBody{}
 	if err := ctx.BindJSON(&body); err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
@@ -27,26 +26,25 @@ func Create(ctx *gin.Context, c proto.ProfilesServiceClient) {
 		return
 	}
 
-	if body.FirstName == nil {
+	if body.Title == nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			"error": "Cannot create a profile without First Name",
+			"error": "Cannot create a movie without Title",
 		})
 		return
 	}
-	if body.Role == nil {
+	if body.ReleaseYear == nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			"error": "Cannot create a profile without Role",
+			"error": "Cannot create a movie without Release Year",
 		})
 		return
 	}
 
 	res, err := c.Create(ctx, &proto.CreateRequest{
-		FirstName: *body.FirstName,
-		LastName:  body.LastName,
-		Age:       body.Age,
-		Gender:    (*proto.Gender)(body.Gender),
-		City:      body.City,
-		Role:      proto.Role(*body.Role),
+		Title:       *body.Title,
+		ReleaseYear: *body.ReleaseYear,
+		DirectorID:  body.DirectorId,
+		MusicBy:     body.DirectorId,
+		WrittenBy:   body.WrittenBy,
 	})
 
 	if err != nil {
